@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import  Todo
+from django.utils import timezone
 
 # Create your views here.
 def todo_list(request):
@@ -12,8 +13,8 @@ def add_todo(request):
         if title:
             Todo.objects.create(title=title)
         return redirect('todo_list')
-    return render(request, 'add_todo.html')
-
+    return render(request, 'add_todo.html', {'current_time': timezone.now()})
+ 
 def complete_todo(request, todo_id):
     todo = Todo.objects.get(id=todo_id)
     todo.completed = True
