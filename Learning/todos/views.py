@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your views here.
 def todo_list(request):
     todos = Todo.objects.all()
-    return render(request, 'todo_list.html', {'todo':todos})
+    return render(request, 'todo_list.html', {'todos':todos})
 
 def add_todo(request):
     if request.method == 'POST':
@@ -13,10 +13,10 @@ def add_todo(request):
         if title:
             Todo.objects.create(title=title)
         return redirect('todo_list')
-    return render(request, 'add_todo.html', {'current_time': timezone.now()})
+    return render(request, 'add_todo.html')
  
 def complete_todo(request, todo_id):
     todo = Todo.objects.get(id=todo_id)
     todo.completed = True
     todo.save()
-    return render('todo_list')
+    return redirect('todo_list')
